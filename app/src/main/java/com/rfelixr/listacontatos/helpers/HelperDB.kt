@@ -40,13 +40,13 @@ class HelperDB(
     }
 
     fun buscarContato(busca: String) : List<ContatosVO>{
-        insertContato(ContatosVO(0,"TEste","897358973"))
+
         val db :SQLiteDatabase = readableDatabase ?: return mutableListOf()
         val lista :MutableList<ContatosVO> = mutableListOf<ContatosVO>()
 
-        val sql = "SELECT *FROM $TABLE_NAME"
-
-        val cursor :Cursor = db.rawQuery(sql, arrayOf()) ?: return mutableListOf()
+        val where = "$COLUMNS_NOME LIKE ? OR $COLUMNS_TELEFONE LIKE ?"
+        val buscaLIKE = arrayOf("%$busca%","%$busca%")
+        val cursor :Cursor = db.query(TABLE_NAME,null,where,buscaLIKE,null,null,COLUMNS_NOME)
 
         if (cursor == null){
             db.close()
