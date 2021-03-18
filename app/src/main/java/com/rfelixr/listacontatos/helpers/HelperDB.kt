@@ -1,5 +1,6 @@
 package com.rfelixr.listacontatos.helpers
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -93,6 +94,18 @@ class HelperDB(
         val args = arrayOf("$id")
 
         db.delete(TABLE_NAME,where,args)
+        db.close()
+    }
+
+    fun updateContato(contato: ContatosVO){
+        val db = writableDatabase ?: return
+        val content = ContentValues()
+        content.put(COLUMNS_NOME,contato.nome)
+        content.put(COLUMNS_TELEFONE,contato.telefone)
+        val where = "$COLUMNS_ID = ?"
+        val args = arrayOf("${contato.id}")
+
+        db.update(TABLE_NAME,content,where,args)
         db.close()
     }
 }
