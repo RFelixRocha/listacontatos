@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.rfelixr.listacontatos.R
+import com.rfelixr.listacontatos.application.ContatoApplication
 import com.rfelixr.listacontatos.feature.listacontatos.model.ContatosVO
 import com.rfelixr.listacontatos.singleton.ContatoSingleton
 import com.rfelixr.listacontatos.bases.BaseActivity
@@ -41,9 +42,9 @@ class ContatoActivity : BaseActivity() {
             telefone
         )
         if(index == -1) {
-            ContatoSingleton.lista.add(contato)
+            ContatoApplication.instance.helperDB?.insertContato(contato)
         }else{
-            ContatoSingleton.lista.set(index,contato)
+//            ContatoSingleton.lista.set(index,contato)
         }
         finish()
     }
