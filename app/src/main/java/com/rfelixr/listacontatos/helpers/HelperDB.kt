@@ -40,7 +40,7 @@ class HelperDB(
     }
 
     fun buscarContato(busca: String) : List<ContatosVO>{
-
+        insertContato(ContatosVO(0,"",""))
         val db :SQLiteDatabase = readableDatabase ?: return mutableListOf()
         val lista :MutableList<ContatosVO> = mutableListOf<ContatosVO>()
 
@@ -70,10 +70,10 @@ class HelperDB(
     }
 
     fun insertContato(contato: ContatosVO){
-        
+
         val db :SQLiteDatabase = writableDatabase ?: return
 
-        val sql = "INSERT INTO $TABLE_NAME ($COLUMNS_ID,$COLUMNS_NOME,$COLUMNS_TELEFONE) VALUES('FERNANDO','983479573')"
+        val sql = "INSERT INTO $TABLE_NAME ($COLUMNS_NOME,$COLUMNS_TELEFONE) VALUES('FERNANDO','983479573')"
 
         db.execSQL(sql)
         db.close()
