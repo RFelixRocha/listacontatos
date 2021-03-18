@@ -1,8 +1,10 @@
 package com.rfelixr.listacontatos.helpers
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.rfelixr.listacontatos.feature.listacontatos.model.ContatosVO
 
 class HelperDB(
     context: Context
@@ -35,5 +37,27 @@ class HelperDB(
             db?.execSQL(DROP_TABLE)
 
         onCreate(db)
+    }
+
+    fun buscarContato(busca: String) : List<ContatosVO>{
+
+        val db :SQLiteDatabase = readableDatabase ?: return mutableListOf()
+        val lista :MutableList<ContatosVO> = mutableListOf<ContatosVO>()
+
+        val sql = "SELECT *FROM $TABLE_NAME"
+        var cursor :Cursor = db.rawQuery(sql,null) ?: return mutableListOf()
+
+        while (cursor.moveToNext()){
+
+            var contato = ContatosVO(
+                cursor.getInt(cursor.getColumnIndex(COLUMNS_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMNS_NOME)),
+                cursor.getString(cursor.getColumnIndex(COLUMNS_TELEFONE))
+            )
+
+            lista.add(contato)
+        }
+
+        return lista
     }
 }
