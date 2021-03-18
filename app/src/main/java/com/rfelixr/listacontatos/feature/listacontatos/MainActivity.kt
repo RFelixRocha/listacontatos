@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rfelixr.listacontatos.R
+import com.rfelixr.listacontatos.application.ContatoApplication
 import com.rfelixr.listacontatos.bases.BaseActivity
 import com.rfelixr.listacontatos.feature.contato.ContatoActivity
 import com.rfelixr.listacontatos.feature.listacontatos.adapter.ContatoAdapter
 import com.rfelixr.listacontatos.feature.listacontatos.model.ContatosVO
 import com.rfelixr.listacontatos.singleton.ContatoSingleton
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class MainActivity : BaseActivity() {
 
@@ -19,7 +21,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        geraListaDeContatos()
         setupToolBar(toolBar, "Lista de contatos",false)
         setupListView()
         setupOnClicks()
@@ -60,15 +61,14 @@ class MainActivity : BaseActivity() {
 
     private fun onClickBuscar(){
         val busca = etBuscar.text.toString()
-        var listaFiltrada: List<ContatosVO> = ContatoSingleton.lista
-        if(!busca.isNullOrEmpty()){
-            listaFiltrada = ContatoSingleton.lista.filter { contato ->
-                if (contato.nome.toLowerCase().contains(busca.toLowerCase())){
-                    return@filter true
-                }
-                return@filter false
-            }
+        var listaFiltrada: List<ContatosVO> = mutableListOf()
+
+        try {
+            listaFiltrada = ContatoApplication.instance.helperDB?.buscarContato(busca) ?: mutableListOf()
+        }catch (ex: Exception){
+            ex.printStackTrace()
         }
+
         adapter = ContatoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
         recyclerView.adapter = adapter
         Toast.makeText(this,"Buscando por $busca",Toast.LENGTH_SHORT).show()
