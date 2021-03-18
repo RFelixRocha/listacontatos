@@ -45,11 +45,11 @@ class HelperDB(
         val lista :MutableList<ContatosVO> = mutableListOf<ContatosVO>()
 
         val sql = "SELECT *FROM $TABLE_NAME"
-        var cursor :Cursor = db.rawQuery(sql,null) ?: return mutableListOf()
+        val cursor :Cursor = db.rawQuery(sql, arrayOf()) ?: return mutableListOf()
 
         while (cursor.moveToNext()){
 
-            var contato = ContatosVO(
+            val contato = ContatosVO(
                 cursor.getInt(cursor.getColumnIndex(COLUMNS_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMNS_NOME)),
                 cursor.getString(cursor.getColumnIndex(COLUMNS_TELEFONE))
