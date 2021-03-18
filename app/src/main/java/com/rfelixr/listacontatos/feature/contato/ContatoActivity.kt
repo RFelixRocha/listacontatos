@@ -24,11 +24,14 @@ class ContatoActivity : BaseActivity() {
     }
 
     private fun setupContato(){
+
         idContato = intent.getIntExtra("index",-1)
+
         if (idContato == -1){
             btnExcluirContato.visibility = View.GONE
             return
         }
+
         var lista = ContatoApplication.instance.helperDB?.buscarContato("$idContato",true) ?: return
 
         val contato = lista.getOrNull(0) ?: return
@@ -41,14 +44,14 @@ class ContatoActivity : BaseActivity() {
         val nome = etNome.text.toString()
         val telefone = etTelefone.text.toString()
         val contato = ContatosVO(
-            0,
+            idContato,
             nome,
             telefone
         )
         if(idContato == -1) {
             ContatoApplication.instance.helperDB?.insertContato(contato)
         }else{
-//            ContatoSingleton.lista.set(idContato,contato)
+            ContatoApplication.instance.helperDB?.updateContato(contato)
         }
         finish()
     }
