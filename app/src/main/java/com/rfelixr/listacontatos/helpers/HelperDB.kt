@@ -45,7 +45,13 @@ class HelperDB(
         val lista :MutableList<ContatosVO> = mutableListOf<ContatosVO>()
 
         val sql = "SELECT *FROM $TABLE_NAME"
+
         val cursor :Cursor = db.rawQuery(sql, arrayOf()) ?: return mutableListOf()
+
+        if (cursor == null){
+            db.close()
+            return mutableListOf()
+        }
 
         while (cursor.moveToNext()){
 
@@ -58,6 +64,18 @@ class HelperDB(
             lista.add(contato)
         }
 
+        db.close()
+
         return lista
+    }
+
+    fun insertContato(contato: ContatosVO){
+        
+        val db :SQLiteDatabase = writableDatabase ?: return
+
+        val sql = "INSERT INTO $TABLE_NAME ($COLUMNS_ID,$COLUMNS_NOME,$COLUMNS_TELEFONE) VALUES('FERNANDO','983479573')"
+
+        db.execSQL(sql)
+        db.close()
     }
 }
