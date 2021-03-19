@@ -2,6 +2,7 @@ package com.rfelixr.listacontatos.feature.listacontatos
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rfelixr.listacontatos.R
@@ -53,17 +54,29 @@ class MainActivity : BaseActivity() {
 
     private fun onClickBuscar(){
         val busca = etBuscar.text.toString()
-        var listaFiltrada: List<ContatosVO> = mutableListOf()
+        progress.visibility = View.VISIBLE
+        Thread(Runnable {
+            Thread.sleep(150)
+            var listaFiltrada: List<ContatosVO> = mutableListOf()
 
-        try {
-            listaFiltrada = ContatoApplication.instance.helperDB?.buscarContato(busca) ?: mutableListOf()
-        }catch (ex: Exception){
-            ex.printStackTrace()
-        }
+            try {
+                listaFiltrada = ContatoApplication.instance.helperDB?.buscarContato(busca) ?: mutableListOf()
+            }catch (ex: Exception){
+                ex.printStackTrace()
+            }
 
-        adapter = ContatoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
-        recyclerView.adapter = adapter
-        Toast.makeText(this,"Buscando por $busca",Toast.LENGTH_SHORT).show()
+            //parte de atualização da tela tem que fica aqui dentro
+            runOnUiThread {
+
+                adapter = ContatoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
+                recyclerView.adapter = adapter
+                progress.visibility = View.GONE
+                Toast.makeText(this,"Buscando por $busca",Toast.LENGTH_SHORT).show()
+
+            }
+
+        }).start()
+
     }
 
 }
