@@ -25,8 +25,6 @@ class ContatoActivity : BaseActivity() {
 
     private fun setupContato(){
 
-        progress.visibility = View.VISIBLE
-
         idContato = intent.getIntExtra("index",-1)
 
         if (idContato == -1){
@@ -34,9 +32,10 @@ class ContatoActivity : BaseActivity() {
             return
         }
 
+        progress.visibility = View.VISIBLE
 
         Thread(Runnable {
-            Thread.sleep(2000)
+
             var lista = ContatoApplication.instance.helperDB?.buscarContato("$idContato",true) ?: return@Runnable
 
             val contato = lista?.getOrNull(0) ?: return@Runnable
