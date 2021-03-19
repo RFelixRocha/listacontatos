@@ -52,6 +52,7 @@ class ContatoActivity : BaseActivity() {
     }
 
     private fun onClickSalvarContato(){
+
         val nome = etNome.text.toString()
         val telefone = etTelefone.text.toString()
         val contato = ContatosVO(
@@ -59,18 +60,43 @@ class ContatoActivity : BaseActivity() {
             nome,
             telefone
         )
-        if(idContato == -1) {
-            ContatoApplication.instance.helperDB?.insertContato(contato)
-        }else{
-            ContatoApplication.instance.helperDB?.updateContato(contato)
-        }
-        finish()
+        progress.visibility = View.VISIBLE
+
+        Thread(Runnable {
+
+            if(idContato == -1) {
+                ContatoApplication.instance.helperDB?.insertContato(contato)
+            }else{
+                ContatoApplication.instance.helperDB?.updateContato(contato)
+            }
+
+            runOnUiThread{
+                progress.visibility = View.GONE
+                finish()
+            }
+
+        }).start()
+
     }
 
     fun onClickExcluirContato(view: View) {
+
         if(idContato > -1){
-            ContatoApplication.instance.helperDB?.deleteContato(idContato)
-            finish()
+
+            progress.visibility = View.VISIBLE
+
+            Thread(Runnable {
+
+                ContatoApplication.instance.helperDB?.deleteContato(idContato)
+
+                runOnUiThread{
+                    progress.visibility = View.GONE
+                    finish()
+                }
+
+            }).start()
+
+
         }
     }
 }
