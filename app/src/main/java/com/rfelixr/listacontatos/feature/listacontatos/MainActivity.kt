@@ -2,12 +2,8 @@ package com.rfelixr.listacontatos.feature.listacontatos
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +13,7 @@ import com.rfelixr.listacontatos.bases.BaseActivity
 import com.rfelixr.listacontatos.feature.contato.ContatoActivity
 import com.rfelixr.listacontatos.feature.listacontatos.adapter.ContatoAdapter
 import com.rfelixr.listacontatos.feature.listacontatos.model.ContatosVO
-import com.rfelixr.listacontatos.singleton.ContatoSingleton
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.drawer_menu.view.*
 import java.lang.Exception
 
 class MainActivity : BaseActivity() {
@@ -78,7 +72,6 @@ class MainActivity : BaseActivity() {
         val busca = etBuscar.text.toString()
         progress.visibility = View.VISIBLE
         Thread(Runnable {
-            Thread.sleep(150)
             var listaFiltrada: List<ContatosVO> = mutableListOf()
 
             try {
