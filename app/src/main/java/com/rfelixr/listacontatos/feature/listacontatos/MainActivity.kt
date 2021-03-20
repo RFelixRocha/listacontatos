@@ -30,6 +30,7 @@ class MainActivity : BaseActivity() {
         setupOnClicks()
     }
 
+    //menu de opções -- menu superior direito
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_list,menu)
@@ -51,6 +52,7 @@ class MainActivity : BaseActivity() {
         }
 
     }
+    //menu de opções -- menu superior direito
 
     private fun setupOnClicks(){
         fab.setOnClickListener { onClickAdd() }
