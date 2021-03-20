@@ -2,6 +2,9 @@ package com.rfelixr.listacontatos.feature.listacontatos
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +28,28 @@ class MainActivity : BaseActivity() {
         setupToolBar(toolBar, "Lista de contatos",false)
         setupListView()
         setupOnClicks()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_list,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            R.id.item_create_contato -> {
+                onClickAdd()
+                true
+            }
+            R.id.item_select_contato -> {
+                Toast.makeText(this,"Selecionar contatos",Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     private fun setupOnClicks(){
