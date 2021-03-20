@@ -7,6 +7,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rfelixr.listacontatos.R
 import com.rfelixr.listacontatos.application.ContatoApplication
@@ -16,6 +19,7 @@ import com.rfelixr.listacontatos.feature.listacontatos.adapter.ContatoAdapter
 import com.rfelixr.listacontatos.feature.listacontatos.model.ContatosVO
 import com.rfelixr.listacontatos.singleton.ContatoSingleton
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.drawer_menu.view.*
 import java.lang.Exception
 
 class MainActivity : BaseActivity() {
@@ -24,35 +28,26 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.drawer_menu)
         setupToolBar(toolBar, "Lista de contatos",false)
         setupListView()
         setupOnClicks()
+        initDrawer()
     }
 
-    //menu de opções -- menu superior direito
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_list,menu)
-        return true
+    //drawer menu
+    private fun initDrawer(){
+        val drawerLayout = findViewById<View>(R.id.drawer_menu) as DrawerLayout
+
+        setSupportActionBar(toolBar)
+
+        val toggle = ActionBarDrawerToggle(this,drawerLayout,toolBar,R.string.open_drawer,R.string.close_drawer)
+
+        drawerLayout.addDrawerListener(toggle)
+
+        toggle.syncState()
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        return when (item.itemId) {
-            R.id.item_create_contato -> {
-                onClickAdd()
-                true
-            }
-            R.id.item_select_contato -> {
-                Toast.makeText(this,"Selecionar contatos",Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-
-    }
-    //menu de opções -- menu superior direito
+    //drawer menu
 
     private fun setupOnClicks(){
         fab.setOnClickListener { onClickAdd() }

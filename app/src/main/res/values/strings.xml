@@ -5,4 +5,7 @@
     <string name="tv_numero_contato">(00) 9 99999999</string>
     <string name="item_menu_create">Criar Contato</string>
     <string name="item_menu_select">Selecionar</string>
+    <string name="open_drawer">Abrir</string>
+    <string name="close_drawer">Fechar</string>
+    <string name="bt_busca">Buscar:</string>
 </resources>
