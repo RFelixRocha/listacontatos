@@ -8,4 +8,6 @@
     <string name="open_drawer">Abrir</string>
     <string name="close_drawer">Fechar</string>
     <string name="bt_busca">Buscar:</string>
+    <string name="btn_save">Salvar contato</string>
+    <string name="btn_delete">Excluir contato</string>
 </resources>
