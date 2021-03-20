@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Lista De Contatos</string>
+    <string name="iv_photograph_content_description">contet description</string>
+    <string name="tv_nome_contato">Nome do contato</string>
+    <string name="tv_numero_contato">(00) 9 99999999</string>
 </resources>
